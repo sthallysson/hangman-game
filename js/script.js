@@ -35,6 +35,7 @@ const keys = [
 ];
 
 let currentWord, correctLetters, wrongGuessCount;
+
 const maxGuess = 6;
 
 const resetGame = () => {
@@ -109,8 +110,17 @@ const initGame = (button, clickedLetter) => {
 
 const buttons = document.querySelectorAll(".key");
 
-buttons.forEach((btn) =>
+buttons.forEach((btn) =>{
+  document.addEventListener('keydown', e => {
+    let key  =  e.key;
+
+    if(key === btn.innerHTML){
+      btn.click()
+    }
+
+  }, false),
   btn.addEventListener("click", (e) => initGame(e.target, btn.innerHTML))
+}
 );
 
 getRandomWords();
