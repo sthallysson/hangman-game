@@ -112,9 +112,11 @@ const buttons = document.querySelectorAll(".key");
 
 buttons.forEach((btn) =>{
   document.addEventListener('keydown', e => {
-    let key  =  e.key;
-
+    let key = e.key;
     if(key === btn.innerHTML){
+      if(gameModal.classList.contains('show')){
+        return
+      }
       btn.click()
     }
 
