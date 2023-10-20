@@ -5,38 +5,17 @@ const keyboard = document.querySelector(".keyboard");
 const gameModal = document.querySelector(".game-modal");
 const playAgainBtn = document.querySelector(".play-again");
 
-const keys = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-];
-
 let currentWord, correctLetters, wrongGuessCount;
-
 const maxGuess = 6;
+
+const generateKeyboard = () => {
+  for (let i = 97; i <= 122; i++) {
+    const button = document.createElement("button");
+    button.innerText = String.fromCharCode(i);
+    keyboard.appendChild(button);
+    button.classList.add("key");
+  }
+};
 
 const resetGame = () => {
   correctLetters = [];
@@ -63,12 +42,6 @@ const getRandomWords = () => {
 
   resetGame();
 };
-
-const addButtonsToKeyboard = (key) => {
-  keyboard.innerHTML += `<button class="key">${key}</button>`;
-};
-
-keys.forEach(addButtonsToKeyboard);
 
 const gameOver = (isVictory) => {
   setTimeout(() => {
@@ -108,22 +81,26 @@ const initGame = (button, clickedLetter) => {
   if (correctLetters.length === currentWord.length) return gameOver(true);
 };
 
+generateKeyboard();
+
 const buttons = document.querySelectorAll(".key");
 
-buttons.forEach((btn) =>{
-  document.addEventListener('keydown', e => {
-    let key = e.key;
-    if(key === btn.innerHTML){
-      if(gameModal.classList.contains('show')){
-        return
+buttons.forEach((btn) => {
+  document.addEventListener(
+    "keydown",
+    (e) => {
+      let key = e.key;
+      if (key === btn.innerHTML) {
+        if (gameModal.classList.contains("show")) {
+          return;
+        }
+        btn.click();
       }
-      btn.click()
-    }
-
-  }, false),
-  btn.addEventListener("click", (e) => initGame(e.target, btn.innerHTML))
-}
-);
+    },
+    false
+  ),
+    btn.addEventListener("click", (e) => initGame(e.target, btn.innerHTML));
+});
 
 getRandomWords();
 
