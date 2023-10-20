@@ -1,4 +1,9 @@
-const wordList = [
+type WordList = {
+  word: string;
+  hint: string;
+};
+
+const wordList: Array<WordList> = [
   { word: "viagem", hint: "Exploração de novos lugares." },
   { word: "café", hint: "Bebida quente e estimulante." },
   { word: "montanha", hint: "Elevação natural da terra." },
@@ -90,3 +95,5 @@ const wordList = [
   { word: "fotografia", hint: "Arte de capturar imagens." },
   { word: "amigo", hint: "Pessoa próxima e confiável." },
 ];
+
+export default wordList;

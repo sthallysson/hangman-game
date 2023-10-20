@@ -1,11 +1,17 @@
-const hangmanImg = document.querySelector(".hangman-box img");
-const wordDisplay = document.querySelector(".word-display");
-const guessesText = document.querySelector(".guesses-text span");
-const keyboard = document.querySelector(".keyboard");
-const gameModal = document.querySelector(".game-modal");
-const playAgainBtn = document.querySelector(".play-again");
+import wordList from "./wordList";
 
-let currentWord, correctLetters, wrongGuessCount;
+const hangmanImg = document.querySelector(
+  ".hangman-box img",
+) as HTMLImageElement;
+const wordDisplay = document.querySelector(".word-display") as HTMLUListElement;
+const guessesText = document.querySelector(
+  ".guesses-text span",
+) as HTMLSpanElement;
+const keyboard = document.querySelector(".keyboard") as HTMLInputElement;
+const gameModal = document.querySelector(".game-modal") as HTMLDivElement;
+const playAgainBtn = document.querySelector(".play-again") as HTMLButtonElement;
+
+let currentWord: string, correctLetters: Array<string>, wrongGuessCount: number;
 const maxGuess = 6;
 
 const generateKeyboard = () => {
@@ -37,31 +43,33 @@ const getRandomWords = () => {
   const { word, hint } = wordList[Math.floor(Math.random() * wordList.length)];
 
   currentWord = word.toLowerCase();
+  const hintSpan = document.querySelector(".hint-text span") as HTMLSpanElement;
 
-  document.querySelector(".hint-text span").innerText = hint;
+  hintSpan.innerText = hint;
 
   resetGame();
 };
 
-const gameOver = (isVictory) => {
+const gameOver = (isVictory: boolean) => {
   setTimeout(() => {
     const modalText = isVictory
       ? `Você encontrou a palavra:`
       : `A palavra certa era:`;
-    gameModal.querySelector("img").src = `images/${
-      isVictory ? "victory" : "lost"
-    }.gif`;
-    gameModal.querySelector("h4").innerText = `${
-      isVictory ? "Parabéns!" : "Game Over!"
-    }`;
-    gameModal.querySelector(
-      "p"
-    ).innerHTML = `${modalText} <strong>${currentWord}</strong>`;
+
+    const gameModalImg = gameModal.querySelector("img") as HTMLImageElement;
+    gameModalImg.src = `images/${isVictory ? "victory" : "lost"}.gif`;
+
+    const gameModalH4 = gameModal.querySelector("h4") as HTMLHeadingElement;
+    gameModalH4.innerText = `${isVictory ? "Parabéns!" : "Game Over!"}`;
+
+    const gameModalP = gameModal.querySelector("p") as HTMLParagraphElement;
+    gameModalP.innerHTML = `${modalText} <strong>${currentWord}</strong>`;
+
     gameModal.classList.add("show");
   }, 300);
 };
 
-const initGame = (button, clickedLetter) => {
+const initGame = (button: HTMLButtonElement, clickedLetter: string) => {
   if (currentWord.includes(clickedLetter)) {
     [...currentWord].forEach((letter, index) => {
       if (letter === clickedLetter) {
@@ -83,13 +91,14 @@ const initGame = (button, clickedLetter) => {
 
 generateKeyboard();
 
-const buttons = document.querySelectorAll(".key");
+const buttons: NodeListOf<HTMLButtonElement> =
+  document.querySelectorAll(".key");
 
 buttons.forEach((btn) => {
   document.addEventListener(
     "keydown",
     (e) => {
-      let key = e.key;
+      const key = e.key;
       if (key === btn.innerHTML) {
         if (gameModal.classList.contains("show")) {
           return;
@@ -97,9 +106,11 @@ buttons.forEach((btn) => {
         btn.click();
       }
     },
-    false
+    false,
   ),
-    btn.addEventListener("click", (e) => initGame(e.target, btn.innerHTML));
+    btn.addEventListener("click", (e) =>
+      initGame(e.target as HTMLButtonElement, btn.innerHTML),
+    );
 });
 
 getRandomWords();

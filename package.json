@@ -4,6 +4,7 @@
   "description": "![Imagem do projeto](./images/design.png)",
   "main": "index.js",
   "scripts": {
+    "dev": "npx webpack -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

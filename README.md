@@ -1,7 +1,7 @@
 # Hangman Game
 
-![Imagem do projeto](./images/design.png)
+O Hangman Game é jogo da forca desenvolvido em HTML, CSS e Vanilla TypeScript.
 
-O Hangman Game é jogo da forca desenvolvido em HTML, CSS e JavaScript.
+![Imagem do projeto](./images/design.png)
 
 [Acessar projeto](https://sthallysson.github.io/hangman-game/)
